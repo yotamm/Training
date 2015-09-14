@@ -9,7 +9,7 @@ namespace Exercise_One
     {
         private static readonly string FilePath = Directory.GetCurrentDirectory() + "CsvFileLog" + ".csv";
         private StreamWriter _stream = File.CreateText(FilePath);
-        private const string _fileTitle = "Severity,Time,Message";
+        private const string FileTitle = "Severity,Time,Message";
         
 
         public CsvFileLog()
@@ -42,7 +42,7 @@ namespace Exercise_One
         {
             File.Delete(FilePath);
             _stream = File.CreateText(FilePath + ".csv");
-            _stream.WriteLine(_fileTitle);
+            _stream.WriteLine(FileTitle);
         }
     }
 }
