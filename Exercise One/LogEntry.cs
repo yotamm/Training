@@ -14,12 +14,12 @@ namespace Exercise_One
         {
             Severity = severity;
             Message = message;
-            Time = DateTime.Today;
+            Time = DateTime.Now;
         }
 
         public LogEntry(string csvEntry)
         {
-            string[] seperated = csvEntry.Split(new char[] {','}, 2);
+            string[] seperated = csvEntry.Split(new char[] {','}, 3);
             Severity severity;
             Severity.TryParse(seperated[0], out severity);
             Severity = severity;
@@ -33,6 +33,11 @@ namespace Exercise_One
         {
             LogEntry objLogEntry = (LogEntry) obj;
             return this.Time.CompareTo(objLogEntry.Time);
+        }
+
+        public override string ToString()
+        {
+            return Severity + ", " + Time + ", " + Message;
         }
     }
 }

@@ -2,6 +2,6 @@
 {
     public enum Severity
     {
-        Informatiom, Warning, Disaster
+        Information, Warning, Disaster
     }
 }
