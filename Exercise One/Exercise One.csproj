@@ -43,8 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CSVFileLog.cs" />
+    <Compile Include="ILog.cs" />
+    <Compile Include="LogEntry.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Severity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
