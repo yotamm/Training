@@ -2,7 +2,7 @@
 
 namespace Exercise_One
 {
-    public class LogEntry
+    public class LogEntry :IComparable
     {
         public Severity Severity { get; }
 
@@ -15,6 +15,24 @@ namespace Exercise_One
             Severity = severity;
             Message = message;
             Time = DateTime.Today;
+        }
+
+        public LogEntry(string csvEntry)
+        {
+            string[] seperated = csvEntry.Split(new char[] {','}, 2);
+            Severity severity;
+            Severity.TryParse(seperated[0], out severity);
+            Severity = severity;
+            DateTime date;
+            DateTime.TryParse(seperated[1], out date);
+            Time = date;
+            Message = seperated[2];
+        }
+
+        public int CompareTo(object obj)
+        {
+            LogEntry objLogEntry = (LogEntry) obj;
+            return this.Time.CompareTo(objLogEntry.Time);
         }
     }
 }
