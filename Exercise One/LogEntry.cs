@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
 
 namespace Exercise_One
 {
@@ -27,6 +29,24 @@ namespace Exercise_One
             DateTime.TryParse(seperated[1], out date);
             Time = date;
             Message = seperated[2];
+        }
+
+        public LogEntry(EventLogEntry entry)
+        {
+            Time = entry.TimeGenerated;
+            Message = entry.Message;
+            switch (entry.EntryType)
+            {
+                case EventLogEntryType.Information:
+                    Severity=Severity.Information;
+                    break;
+                case EventLogEntryType.Warning:
+                    Severity = Severity.Warning;
+                    break;
+                case EventLogEntryType.Error:
+                    Severity = Severity.Disaster;
+                    break;
+            }
         }
 
         public int CompareTo(object obj)

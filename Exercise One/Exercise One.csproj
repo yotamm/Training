@@ -44,6 +44,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CSVFileLog.cs" />
+    <Compile Include="EncryptedCsvFileLog.cs" />
+    <Compile Include="EventLog.cs" />
     <Compile Include="ILog.cs" />
     <Compile Include="LogEntry.cs" />
     <Compile Include="NoLogDefinedException.cs" />
