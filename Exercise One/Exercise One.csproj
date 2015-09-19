@@ -48,6 +48,7 @@
     <Compile Include="EventLog.cs" />
     <Compile Include="ILog.cs" />
     <Compile Include="LogEntry.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="NoLogDefinedException.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

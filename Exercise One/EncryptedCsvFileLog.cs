@@ -5,32 +5,26 @@ using System.Linq;
 
 namespace Exercise_One
 {
-    public class EncryptedCsvFileLog : ILog
+    public class EncryptedCsvFileLog : Logger
     {
-        private const string FileTitle = "Severity,Time,Message\n";
-        public string FilePath { get; }
-
-
-
+        
         public EncryptedCsvFileLog(string fileName)
         {
             FilePath = Directory.GetCurrentDirectory() + "\\" + fileName + ".csv";
-            ClearLog();
+            
         }
 
-        public void WriteEntry(LogEntry entry)
+        private string Encrypt(string line)
         {
-            try
-            {
-                File.AppendAllText(FilePath, Encrypt($"{entry.Severity.ToString()},{entry.Time.ToString()},\"{entry.Message}\"\n"));
-            }
-            catch (Exception e)
-            {
-                throw new NoLogDefinedException(FilePath);
-            }
+            return line.Reverse() as string;
         }
 
-        public LogEntry[] ReadEntries(DateTime date)
+        private string Decrypt(string line)
+        {
+            return line.Reverse() as string;
+        }
+
+        public override LogEntry[] ReadEntries(DateTime startDate)
         {
             string[] lines;
             try
@@ -44,8 +38,14 @@ namespace Exercise_One
             List<LogEntry> toReturn = new List<LogEntry>();
             for (int i = lines.Length - 1; i >= 1; i--)
             {
-                LogEntry current = new LogEntry(Decrypt(lines[i]));
-                if (date.CompareTo(current.Time) > 0)
+                lines[i] = Decrypt(lines[i]); //TODO there is code duplication here with csvFileLog, fix it with abstracts
+                string[] seperated = lines[i].Split(new[] { ',' }, 3);
+                Severity severity;
+                Enum.TryParse(seperated[0], out severity);
+                DateTime time;
+                DateTime.TryParse(seperated[1], out time);
+                LogEntry current = new LogEntry(severity, seperated[2], time);
+                if (startDate.CompareTo(current.Time) > 0)
                 {
                     break;
                 }
@@ -54,20 +54,16 @@ namespace Exercise_One
             return toReturn.ToArray();
         }
 
-        public void ClearLog()
+        public override void WriteEntry(LogEntry entry)
         {
-            File.Delete(FilePath);
-            File.AppendAllText(FilePath, Encrypt(FileTitle));
-        }
-
-        private string Encrypt(string line)
-        {
-            return line.Reverse() as string;
-        }
-
-        private string Decrypt(string line)
-        {
-            return line.Reverse() as string;
+            try
+            {
+                File.AppendAllText(FilePath, Encrypt($"{entry.Severity.ToString()},{entry.Time.ToString()},\"{entry.Message}\"\n"));
+            }
+            catch (Exception e)
+            {
+                throw new NoLogDefinedException(FilePath);
+            }
         }
     }
 }

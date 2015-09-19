@@ -1,17 +1,13 @@
 ﻿using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 namespace Exercise_One
 {
-    public class CsvFileLog : ILog
+    public class CsvFileLog : Logger
     {
-        
         private const string FileTitle = "Severity,Time,Message\n";
         public string FilePath { get; }
-
 
 
         public CsvFileLog(string fileName)
@@ -20,34 +16,40 @@ namespace Exercise_One
             ClearLog();
         }
 
-        public void WriteEntry(LogEntry entry)
+        public override void WriteEntry(LogEntry entry)
         {
             try
             {
-                File.AppendAllText(FilePath, $"{entry.Severity.ToString()},{entry.Time.ToString()},\"{entry.Message}\"\n");
+                File.AppendAllText(FilePath, $"{entry.Severity},{entry.Time},\"{entry.Message}\"\n");
             }
             catch (Exception e)
             {
                 throw new NoLogDefinedException(FilePath);
             }
         }
-
-        public LogEntry[] ReadEntries(DateTime date)
+        
+        public override LogEntry[] ReadEntries(DateTime startDate)
         {
             string[] lines;
             try
             {
                 lines = File.ReadAllLines(FilePath);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw new NoLogDefinedException(FilePath);
             }
+
             List<LogEntry> toReturn = new List<LogEntry>();
             for (int i = lines.Length - 1; i >= 1; i--)
             {
-                LogEntry current = new LogEntry(lines[i]);
-                if (date.CompareTo(current.Time)>0)
+                string[] seperated = lines[i].Split(new[] { ',' }, 3);
+                Severity severity;
+                Enum.TryParse(seperated[0], out severity);
+                DateTime time;
+                DateTime.TryParse(seperated[1], out time);
+                LogEntry current = new LogEntry(severity, seperated[2], time);
+                if (startDate.CompareTo(current.Time) > 0)
                 {
                     break;
                 }
@@ -56,10 +58,6 @@ namespace Exercise_One
             return toReturn.ToArray();
         }
 
-        public void ClearLog()
-        {
-            File.Delete(FilePath);
-            File.AppendAllText(FilePath, FileTitle);            
-        }
+        
     }
 }

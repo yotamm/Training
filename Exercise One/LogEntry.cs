@@ -4,7 +4,7 @@ using System.Diagnostics.Eventing.Reader;
 
 namespace Exercise_One
 {
-    public class LogEntry :IComparable
+    public class LogEntry
     {
         public Severity Severity { get; }
 
@@ -19,45 +19,17 @@ namespace Exercise_One
             Time = DateTime.Now;
         }
 
-        public LogEntry(string csvEntry)
+        public LogEntry(Severity severity, string message, DateTime time)
         {
-            string[] seperated = csvEntry.Split(new char[] {','}, 3);
-            Severity severity;
-            Severity.TryParse(seperated[0], out severity);
             Severity = severity;
-            DateTime date;
-            DateTime.TryParse(seperated[1], out date);
-            Time = date;
-            Message = seperated[2];
-        }
-
-        public LogEntry(EventLogEntry entry)
-        {
-            Time = entry.TimeGenerated;
-            Message = entry.Message;
-            switch (entry.EntryType)
-            {
-                case EventLogEntryType.Information:
-                    Severity=Severity.Information;
-                    break;
-                case EventLogEntryType.Warning:
-                    Severity = Severity.Warning;
-                    break;
-                case EventLogEntryType.Error:
-                    Severity = Severity.Disaster;
-                    break;
-            }
-        }
-
-        public int CompareTo(object obj)
-        {
-            LogEntry objLogEntry = (LogEntry) obj;
-            return this.Time.CompareTo(objLogEntry.Time);
+            Message = message;
+            Time = time;
         }
 
         public override string ToString()
         {
-            return Severity + ", " + Time + ", " + Message;
+            string result = $"{Severity}, {Time}, {Message}";
+            return result;
         }
     }
 }
