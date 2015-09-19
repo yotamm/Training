@@ -11,9 +11,10 @@ namespace Exercise_One
     {
         static void Main(string[] args)
         {
+
             string line;
             bool exit = false;
-            CsvFileLog log=new CsvFileLog("Log File");
+            
             while (!exit)
             {
                 line = Console.ReadLine();

@@ -44,16 +44,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CSVFileLog.cs" />
-    <Compile Include="EncryptedCsvFileLog.cs" />
-    <Compile Include="EventLog.cs" />
-    <Compile Include="ILog.cs" />
-    <Compile Include="LogEntry.cs" />
-    <Compile Include="Logger.cs" />
-    <Compile Include="NoLogDefinedException.cs" />
+    <Compile Include="Logs\Log Types\CSVFileLog.cs" />
+    <Compile Include="Logs\Log Types\EncryptedCsvFileLog.cs" />
+    <Compile Include="Logs\Log Types\EventLog.cs" />
+    <Compile Include="Logs\Log Types\Using\ILog.cs" />
+    <Compile Include="Logs\Log Types\Using\LogEntry.cs" />
+    <Compile Include="Logs\Logger.cs" />
+    <Compile Include="Logs\Log Types\Using\NoLogDefinedException.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Severity.cs" />
+    <Compile Include="Logs\Log Types\Using\Severity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

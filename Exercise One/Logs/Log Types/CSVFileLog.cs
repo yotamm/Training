@@ -6,26 +6,22 @@ namespace Exercise_One
 {
     public class CsvFileLog : Logger
     {
-        private const string FileTitle = "Severity,Time,Message\n";
-        public string FilePath { get; }
-
-
-        public CsvFileLog(string fileName)
-        {
-            FilePath = Directory.GetCurrentDirectory() + "\\" + fileName + ".csv";
-            ClearLog();
-        }
-
+        
         public override void WriteEntry(LogEntry entry)
         {
             try
             {
-                File.AppendAllText(FilePath, $"{entry.Severity},{entry.Time},\"{entry.Message}\"\n");
+                File.AppendAllText(_filePath, GenerateEntryLine(entry));
             }
             catch (Exception e)
             {
-                throw new NoLogDefinedException(FilePath);
+                throw new NoLogDefinedException(_filePath);
             }
+        }
+
+        protected string GenerateEntryLine(LogEntry entry)
+        {
+            return $"{entry.Severity},{entry.Time},\"{entry.Message}\"\n";
         }
         
         public override LogEntry[] ReadEntries(DateTime startDate)
@@ -33,13 +29,18 @@ namespace Exercise_One
             string[] lines;
             try
             {
-                lines = File.ReadAllLines(FilePath);
+                lines = File.ReadAllLines(_filePath);
             }
             catch (Exception)
             {
-                throw new NoLogDefinedException(FilePath);
+                throw new NoLogDefinedException(_filePath);
             }
+            return EntryExtraction(lines, startDate);
 
+        }
+
+        protected LogEntry[] EntryExtraction(string[] lines, DateTime startDate)
+        {
             List<LogEntry> toReturn = new List<LogEntry>();
             for (int i = lines.Length - 1; i >= 1; i--)
             {
@@ -58,6 +59,5 @@ namespace Exercise_One
             return toReturn.ToArray();
         }
 
-        
     }
 }
