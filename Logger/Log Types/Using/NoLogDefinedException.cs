@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Runtime.Serialization;
 
-namespace Exercise_One
+namespace Logger
 {
     public class NoLogDefinedException : Exception
     {

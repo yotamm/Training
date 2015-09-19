@@ -1,4 +1,4 @@
-﻿namespace Exercise_One
+﻿namespace Logger.Log_Types.Using
 {
     public enum Severity
     {

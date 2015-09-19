@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.Eventing.Reader;
-using System.Reflection;
+using Logger.Log_Types.Using;
 
-namespace Exercise_One
+namespace Logger.Log_Types
 {
     public class EventLog : Logger
     {
         private const string Source = "Exercise_One";
-        private static string log = "Application", machine = "YOTAMLAPTOP";
+        private static string log = "Application";
+        private static string machine = "YOTAMLAPTOP";
         private static System.Diagnostics.EventLog _eventLog = new System.Diagnostics.EventLog(log, machine, Source);
 
 
@@ -58,6 +58,10 @@ namespace Exercise_One
         public override void ClearLog()
         {
             //TODO
+        }
+
+        public EventLog() : base("")
+        {
         }
     }
 }

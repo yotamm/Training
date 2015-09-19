@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Diagnostics.Eventing.Reader;
 
-namespace Exercise_One
+namespace Logger.Log_Types.Using
 {
     public class LogEntry
     {

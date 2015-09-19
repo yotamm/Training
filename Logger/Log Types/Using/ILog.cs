@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Exercise_One
+namespace Logger.Log_Types.Using
 {
     public interface ILog
     {

@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using Logger.Log_Types.Using;
 
-namespace Exercise_One
+namespace Logger.Log_Types
 {
     public class EncryptedCsvFileLog : CsvFileLog
     {
@@ -20,15 +19,15 @@ namespace Exercise_One
             string[] lines;
             try
             {
-                lines = File.ReadAllLines(_filePath);
+                lines = File.ReadAllLines(FilePath);
                 for (int i = 1; i < lines.Length; i++)
                 {
                     lines[i] = Encrypt_Decrypt(lines[i]);
                 }
             }
-            catch (Exception e)
+            catch (FileNotFoundException)
             {
-                throw new NoLogDefinedException(_filePath);
+                throw new FileNotFoundException();
             }
             return EntryExtraction(lines, startDate);
         }
@@ -39,12 +38,14 @@ namespace Exercise_One
             {
                 string line =
                     Encrypt_Decrypt(GenerateEntryLine(entry));
-                File.AppendAllText(_filePath, line);
+                File.AppendAllText(FilePath, line);
             }
-            catch (Exception e)
+            catch (FileNotFoundException)
             {
-                throw new NoLogDefinedException(_filePath);
+                throw new FileNotFoundException();
             }
         }
+
+        
     }
 }

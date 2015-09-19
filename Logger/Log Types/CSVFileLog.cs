@@ -1,21 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Logger.Log_Types.Using;
 
-namespace Exercise_One
+namespace Logger.Log_Types
 {
     public class CsvFileLog : Logger
     {
-        
+        private const string FileTitle = "Severity,Time,Message\n";
+
+
+        public CsvFileLog() : base("CSVLog.csv")
+        {
+        }
+
         public override void WriteEntry(LogEntry entry)
         {
             try
             {
-                File.AppendAllText(_filePath, GenerateEntryLine(entry));
+                File.AppendAllText(FilePath, GenerateEntryLine(entry));
             }
-            catch (Exception e)
+            catch (FileNotFoundException)
             {
-                throw new NoLogDefinedException(_filePath);
+                throw new FileNotFoundException();
             }
         }
 
@@ -29,11 +36,11 @@ namespace Exercise_One
             string[] lines;
             try
             {
-                lines = File.ReadAllLines(_filePath);
+                lines = File.ReadAllLines(FilePath);
             }
-            catch (Exception)
+            catch (FileNotFoundException)
             {
-                throw new NoLogDefinedException(_filePath);
+                throw new FileNotFoundException();
             }
             return EntryExtraction(lines, startDate);
 
@@ -59,5 +66,10 @@ namespace Exercise_One
             return toReturn.ToArray();
         }
 
+        public override void ClearLog()
+        {
+            File.Delete(FilePath);
+            File.AppendAllText(FilePath, FileTitle);
+        }
     }
 }

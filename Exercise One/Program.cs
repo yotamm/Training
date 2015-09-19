@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Logger.Log_Types;
+using Logger.Log_Types.Using;
+
 
 namespace Exercise_One
 {
@@ -11,7 +11,23 @@ namespace Exercise_One
     {
         static void Main(string[] args)
         {
-
+            string logTypeValue = ConfigurationManager.AppSettings["Log Type"];
+            Logger.Logger log;
+            switch (logTypeValue)
+            {
+                case "CSV":
+                    log = new CsvFileLog();
+                    break;
+                case "Encrypted CSV":
+                    log = new EncryptedCsvFileLog();
+                    break;
+                case "Event Log":
+                    log = new EventLog();
+                    break;
+                default:
+                    log = new CsvFileLog();
+                    break;
+            }
             string line;
             bool exit = false;
             
