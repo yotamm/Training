@@ -10,7 +10,7 @@ namespace Logger.Log_Types
         private const string FileTitle = "Severity,Time,Message\n";
 
 
-        public CsvFileLog() : base("CSVLog.csv")
+        public CsvFileLog(int limit) : base("CSVLog.csv", limit)
         {
         }
 
@@ -18,7 +18,15 @@ namespace Logger.Log_Types
         {
             try
             {
-                File.AppendAllText(FilePath, GenerateEntryLine(entry));
+                if (CurrentEntry != LogLimit)
+                {
+                    File.AppendAllText(FilePath, GenerateEntryLine(entry));
+                    CurrentEntry++;
+                }
+                else
+                {
+                    throw new LogIsFullException("Log Limit Reached. Please Clear The Log");
+                }
             }
             catch (FileNotFoundException)
             {

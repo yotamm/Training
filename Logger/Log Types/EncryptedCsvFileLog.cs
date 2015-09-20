@@ -6,7 +6,10 @@ namespace Logger.Log_Types
 {
     public class EncryptedCsvFileLog : CsvFileLog
     {
-        
+        public EncryptedCsvFileLog(int limit) : base(limit)
+        {
+        }
+
         private string Encrypt_Decrypt(string line)
         {
             char[] chars = line.ToCharArray();
@@ -36,9 +39,17 @@ namespace Logger.Log_Types
         {
             try
             {
-                string line =
-                    Encrypt_Decrypt(GenerateEntryLine(entry));
-                File.AppendAllText(FilePath, line);
+                if (CurrentEntry != LogLimit)
+                {
+                    string line =
+                        Encrypt_Decrypt(GenerateEntryLine(entry));
+                    File.AppendAllText(FilePath, line);
+                    CurrentEntry++;
+                }
+                else
+                {
+                    throw new LogIsFullException("Log Limit Reached. Please Clear The Log");
+                }
             }
             catch (FileNotFoundException)
             {

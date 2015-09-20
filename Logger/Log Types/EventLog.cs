@@ -5,7 +5,7 @@ using Logger.Log_Types.Using;
 
 namespace Logger.Log_Types
 {
-    public class EventLog : Logger
+    public class EventLog : ILog
     {
         private const string Source = "Exercise_One";
         private static string log = "Application";
@@ -13,7 +13,7 @@ namespace Logger.Log_Types
         private static System.Diagnostics.EventLog _eventLog = new System.Diagnostics.EventLog(log, machine, Source);
 
 
-        public override void WriteEntry(LogEntry entry)
+        public void WriteEntry(LogEntry entry)
         {
             switch (entry.Severity)
             {
@@ -29,7 +29,7 @@ namespace Logger.Log_Types
             }
         }
 
-        public override LogEntry[] ReadEntries(DateTime date)
+        public LogEntry[] ReadEntries(DateTime date)
         {
             List<LogEntry> toReturn = new List<LogEntry>();
             foreach (EventLogEntry entry in _eventLog.Entries)
@@ -55,13 +55,9 @@ namespace Logger.Log_Types
             return toReturn.ToArray();
         }
 
-        public override void ClearLog()
+        public void ClearLog()
         {
             //TODO
-        }
-
-        public EventLog() : base("")
-        {
         }
     }
 }

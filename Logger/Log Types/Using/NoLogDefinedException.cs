@@ -5,7 +5,7 @@ namespace Logger
 {
     public class NoLogDefinedException : Exception
     {
-        public NoLogDefinedException() : base("The log file: is not defined")
+        public NoLogDefinedException()
         {
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.IO;
+using Logger;
 using Logger.Log_Types;
 using Logger.Log_Types.Using;
 
@@ -11,26 +12,27 @@ namespace Exercise_One
     {
         static void Main(string[] args)
         {
+            int limit;
+            int.TryParse(ConfigurationManager.AppSettings["Log Limit"], out limit);
             string logTypeValue = ConfigurationManager.AppSettings["Log Type"];
-            Logger.Logger log;
+            ILog log;
+            DateTime logStartTime = DateTime.Now;
             switch (logTypeValue)
             {
                 case "CSV":
-                    log = new CsvFileLog();
+                    log = new CsvFileLog(limit);
                     break;
                 case "Encrypted CSV":
-                    log = new EncryptedCsvFileLog();
+                    log = new EncryptedCsvFileLog(limit);
                     break;
                 case "Event Log":
                     log = new EventLog();
                     break;
                 default:
-                    log = new CsvFileLog();
-                    break;
+                    throw new NoLogDefinedException("The log file is not defined in the config file");
             }
             string line;
             bool exit = false;
-            
             while (!exit)
             {
                 line = Console.ReadLine();
@@ -63,7 +65,7 @@ namespace Exercise_One
                     case "c":
                         try
                         {
-                            LogEntry[] entries = log.ReadEntries(File.GetCreationTime(log.FilePath).Date);
+                            LogEntry[] entries = log.ReadEntries(logStartTime);
                             foreach (LogEntry logEntry in entries)
                             {
                                 Console.WriteLine(logEntry.ToString());
