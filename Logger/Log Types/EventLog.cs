@@ -7,7 +7,7 @@ namespace Logger.Log_Types
 {
     public class EventLog : ILog
     {
-        private const string Source = "Exercise_One";
+        private const string Source = "Exercise One";
         private static string log = "Application";
         private static string machine = "YOTAMLAPTOP";
         private static System.Diagnostics.EventLog _eventLog = new System.Diagnostics.EventLog(log, machine, Source);
@@ -15,6 +15,8 @@ namespace Logger.Log_Types
 
         public void WriteEntry(LogEntry entry)
         {
+            if (!System.Diagnostics.EventLog.SourceExists(Source))
+                System.Diagnostics.EventLog.CreateEventSource(Source, log);
             switch (entry.Severity)
             {
                 case Severity.Disaster:

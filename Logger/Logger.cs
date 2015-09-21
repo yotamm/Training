@@ -19,9 +19,9 @@ namespace Logger
 
         protected Logger(string fileName, int limit)
         {
+            _filePath = $"{Directory.GetCurrentDirectory()}\\{fileName}";
             ClearLog();
             LogLimit = limit;
-            _filePath = $"{Directory.GetCurrentDirectory()}\\{fileName}";
         }
 
         public abstract void ClearLog();

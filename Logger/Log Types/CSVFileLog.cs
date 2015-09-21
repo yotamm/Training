@@ -20,7 +20,7 @@ namespace Logger.Log_Types
             {
                 if (CurrentEntry != LogLimit)
                 {
-                    File.AppendAllText(FilePath, GenerateEntryLine(entry));
+                    File.AppendAllText(FilePath, GenerateEntryLine(entry) + "\n");
                     CurrentEntry++;
                 }
                 else
@@ -36,7 +36,7 @@ namespace Logger.Log_Types
 
         protected string GenerateEntryLine(LogEntry entry)
         {
-            return $"{entry.Severity},{entry.Time},\"{entry.Message}\"\n";
+            return $"{entry.Severity},{entry.Time},\"{entry.Message}\"";
         }
         
         public override LogEntry[] ReadEntries(DateTime startDate)

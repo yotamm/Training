@@ -43,6 +43,7 @@ namespace Logger.Log_Types
                 {
                     string line =
                         Encrypt_Decrypt(GenerateEntryLine(entry));
+                    line += "\n";
                     File.AppendAllText(FilePath, line);
                     CurrentEntry++;
                 }
