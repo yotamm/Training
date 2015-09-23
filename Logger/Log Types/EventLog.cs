@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Logger.Log_Types.Using;
+using Logger.Infra;
+using WindowsEventLog = System.Diagnostics.EventLog;
 
 namespace Logger.Log_Types
 {
@@ -10,13 +11,13 @@ namespace Logger.Log_Types
         private const string Source = "Exercise One";
         private static string log = "Application";
         private static string machine = "YOTAMLAPTOP";
-        private static System.Diagnostics.EventLog _eventLog = new System.Diagnostics.EventLog(log, machine, Source);
+        private static readonly WindowsEventLog _eventLog = new WindowsEventLog(log, machine, Source);
 
 
         public void WriteEntry(LogEntry entry)
         {
-            if (!System.Diagnostics.EventLog.SourceExists(Source))
-                System.Diagnostics.EventLog.CreateEventSource(Source, log);
+            if (!WindowsEventLog.SourceExists(Source))
+                WindowsEventLog.CreateEventSource(Source, log);
             switch (entry.Severity)
             {
                 case Severity.Disaster:
@@ -51,7 +52,7 @@ namespace Logger.Log_Types
                             severity = Severity.Disaster;
                             break;
                     }
-                    toReturn.Add(new LogEntry(severity, entry.Message, entry.TimeWritten));
+                    toReturn.Add(new LogEntry {Severity = severity, Message = entry.Message, Time = entry.TimeWritten});
                 }
             }
             return toReturn.ToArray();

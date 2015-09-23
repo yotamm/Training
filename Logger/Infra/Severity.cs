@@ -1,4 +1,4 @@
-﻿namespace Logger.Log_Types.Using
+﻿namespace Logger.Infra
 {
     public enum Severity
     {

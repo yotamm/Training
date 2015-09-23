@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-
-namespace Logger.Log_Types.Using
+namespace Logger.Exceptions
 {
     public class LogIsFullException : Exception
     {

@@ -40,15 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Log Types\Using\LogIsFullException.cs" />
-    <Compile Include="Logger.cs" />
+    <Compile Include="Exceptions\LogIsFullException.cs" />
+    <Compile Include="Exceptions\NoLogDefinedException.cs" />
     <Compile Include="Log Types\CSVFileLog.cs" />
     <Compile Include="Log Types\EncryptedCsvFileLog.cs" />
     <Compile Include="Log Types\EventLog.cs" />
-    <Compile Include="Log Types\Using\ILog.cs" />
-    <Compile Include="Log Types\Using\LogEntry.cs" />
-    <Compile Include="Log Types\Using\Severity.cs" />
-    <Compile Include="Log Types\Using\NoLogDefinedException.cs" />
+    <Compile Include="Infra\ILog.cs" />
+    <Compile Include="Infra\LogEntry.cs" />
+    <Compile Include="Infra\Severity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

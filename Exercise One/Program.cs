@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Configuration;
-using System.IO;
 using Logger;
+using Logger.Exceptions;
+using Logger.Infra;
 using Logger.Log_Types;
-using Logger.Log_Types.Using;
 
 
 namespace Exercise_One

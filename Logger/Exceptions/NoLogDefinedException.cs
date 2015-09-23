@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Logger
+namespace Logger.Exceptions
 {
     public class NoLogDefinedException : Exception
     {
