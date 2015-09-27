@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Configuration;
-using Logger;
-using Logger.Exceptions;
 using Logger.Infra;
-using Logger.Log_Types;
+
 
 
 namespace Exercise_One
@@ -12,27 +9,10 @@ namespace Exercise_One
     {
         static void Main(string[] args)
         {
-            int limit;
-            int.TryParse(ConfigurationManager.AppSettings["Log Limit"], out limit);
-            string logTypeValue = ConfigurationManager.AppSettings["Log Type"];
-            ILog log;
-            DateTime logStartTime = DateTime.Now;
-            switch (logTypeValue)
-            {
-                case "CSV":
-                    log = new CsvFileLog(limit);
-                    break;
-                case "Encrypted CSV":
-                    log = new EncryptedCsvFileLog(limit);
-                    break;
-                case "Event Log":
-                    log = new EventLog();
-                    break;
-                default:
-                    throw new NoLogDefinedException("The log file is not defined in the config file");
-            }
+            ILog log = Logger.Logger.Instance.Log;
             string line;
             bool exit = false;
+
             while (!exit)
             {
                 line = Console.ReadLine();
@@ -41,7 +21,7 @@ namespace Exercise_One
                     case "a":
                         try
                         {
-                            log.WriteEntry(new LogEntry(Severity.Information, "Blink your right eye"));
+                            log.WriteEntry(new LogEntry() {Message = "Blink your right eye"});
                         }
                         catch (Exception e)
                         {
@@ -53,7 +33,7 @@ namespace Exercise_One
                     case "b":
                         try
                         {
-                            log.WriteEntry(new LogEntry(Severity.Information, "Blink your left eye"));
+                            log.WriteEntry(new LogEntry() {Message = "Blink your left eye"});
                         }
                         catch (Exception e)
                         {
@@ -65,7 +45,7 @@ namespace Exercise_One
                     case "c":
                         try
                         {
-                            LogEntry[] entries = log.ReadEntries(logStartTime);
+                            LogEntry[] entries = log.ReadEntries(DateTime.MinValue);
                             foreach (LogEntry logEntry in entries)
                             {
                                 Console.WriteLine(logEntry.ToString());
