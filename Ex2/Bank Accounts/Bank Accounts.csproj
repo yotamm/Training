@@ -42,7 +42,11 @@
   <ItemGroup>
     <Compile Include="List Infra\IList.cs" />
     <Compile Include="List Infra\Node.cs" />
+    <Compile Include="List Infra\SuperList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Account\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
