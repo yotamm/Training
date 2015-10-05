@@ -1,4 +1,4 @@
-﻿namespace Bank_Accounts.List_Infra
+﻿namespace Super_List.List_Infra
 {
     public class Node<T>
     {

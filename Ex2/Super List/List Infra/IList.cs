@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Bank_Accounts.List_Infra
+namespace Super_List.List_Infra
 {
     public interface IList<T> : IEnumerable<T>
     {
